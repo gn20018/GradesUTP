@@ -4,3 +4,4 @@ Programa en Java para cargar y mostrar los datos del record de notas de un alumn
 - Correa Gastelo, Álvaro Mauricio Aaron 
 - Ramos Incio, Rodolfo Valentino
 - Jiménez Gálvez, Mariella Fernanda
+- Mijahuanca Quintos, Jhon Lennyn
