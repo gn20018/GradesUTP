@@ -71,6 +71,14 @@ public class CursoAprobadoDTO {
         this.seccion = seccion;
     }
 
+    public int getPromedioFinal() {
+        return promedioFinal;
+    }
+
+    public void setPromedioFinal(int promedioFinal) {
+        this.promedioFinal = promedioFinal;
+    }
+
     // endregion
 
     // region [Contructors]

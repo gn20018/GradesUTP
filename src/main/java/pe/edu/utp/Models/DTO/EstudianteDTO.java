@@ -1,6 +1,10 @@
 package pe.edu.utp.Models.DTO;
 
-public class EstudianteDTO {
+import java.util.Comparator;
+
+public class EstudianteDTO implements Comparable<EstudianteDTO>  {
+
+    public static final Comparator<EstudianteDTO> ESTUDIANTE_DTO_COMPARATOR_NATURAL = Comparator.comparing(EstudianteDTO::getCodigoEstudiante);
 
     // region [Attributes]
     String codigoEstudiante;
@@ -11,6 +15,8 @@ public class EstudianteDTO {
     String apellidoMaterno;
     String carrera;
     String planDeEstudios;
+
+
     // endregion
 
     // region [Getters & Setters]
@@ -97,5 +103,27 @@ public class EstudianteDTO {
         this.planDeEstudios = planDeEstudios;
     }
 
+    public EstudianteDTO() {
+
+    }
     // endregion
+
+
+    public int compareTo(EstudianteDTO o) {
+        return ESTUDIANTE_DTO_COMPARATOR_NATURAL.compare(this, o);
+    }
+
+    @Override
+    public String toString() {
+        return "EstudianteDTO{" +
+                "codigoEstudiante='" + codigoEstudiante + '\'' +
+                ", contrasena='" + contrasena + '\'' +
+                ", primerNombre='" + primerNombre + '\'' +
+                ", segundoNombre='" + segundoNombre + '\'' +
+                ", apellidoPaterno='" + apellidoPaterno + '\'' +
+                ", apellidoMaterno='" + apellidoMaterno + '\'' +
+                ", carrera='" + carrera + '\'' +
+                ", planDeEstudios='" + planDeEstudios + '\'' +
+                '}';
+    }
 }

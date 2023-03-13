@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="stylesheet/login.css">
+    <title>Portal de Notas</title>
+    <link rel="icon" href="img/utp.png">
+</head>
+<body>
+    <section>
+        <div class="form-box">
+            <div class="for -value">
+                <form name="formIngresar" action="portalNotas" method="get">
+                    <h2>Bienvenidos al Portal de Notas</h2>
+                    <div class="inputbox">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <input id="txtCodigoEstudiante" name="txtCodigoEstudiante" type="text" required>
+                        <label for="">Codigo del Estudiante</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input id="txtContrasena" name="txtContrasena" type="password" required>
+                        <label for="">Contraseña</label>
+                    </div>
+                    <div class="forget">
+                        <a href="https://contrasena.utp.edu.pe/Recuperacion/OlvideMiClave.aspx">Olvidé mi contraseña</a></label>
+                        
+                    </div>
+                    <button>Ingresar</button>
+                    
+                </form>
+            </div>
+        </div>
+    </section>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
