@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 
             //Validando usuario ingresado
             ValidadorLogin.esUsuarioValido(codigoEstudiante,estudiantes);
-            ValidadorLogin.esContrasenaValida(contrasena,estudiantes);
+            ValidadorLogin.esContrasenaValida(contrasena,estudiantes,codigoEstudiante);
 
             //Generando lista de cursos
             String listaCursos= "src/main/resources/csv/registroCursos.csv";
@@ -66,9 +66,9 @@ public class LoginServlet extends HttpServlet {
             // Listando Cursos Aprobados del estudiante
             LanzadorApp.portal.listCursosAprobados(estudianteDTO,cursosAprobados);
 
-
             //Imprimiendo portal de notas del estudiante
             String html = LanzadorApp.portal.getHTMLReport(estudianteDTO);
+            resp.setCharacterEncoding("utf-8");
             resp.getWriter().println(html);
 
 

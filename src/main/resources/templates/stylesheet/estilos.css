@@ -1,11 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  
+       
+    }
+
 body{
     background-color: white;
     font-family: Arial, Helvetica, sans-serif;
     margin: 0 auto;
+   
     }
-    
     header{
-        background: #F0D628;
+        background: #f02828;
         height: 70px;
         display: flex;
         align-items: center;
@@ -33,9 +41,9 @@ body{
     }
 
     .buttonLogout {
-    background-color: red; /* Green */
+    background-color: rgb(255, 60, 0); /* red */
     border: none;
-    color: white;
+    color: black;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -44,6 +52,7 @@ body{
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 10px;
+    border-color: #000;
     box-shadow: 1px 1px 4px #000;
     }
 
@@ -58,12 +67,25 @@ body{
         padding: 5px;
     }
     
+    .title2{
+        display: flex;
+        justify-content: center;
+        font-family: 'Tilt Warp', cursive;
+        position: relative;
+        top: 27px;
+        font-size: 30px;
+    }
+
     .code-center{
+        position: relative;
+        top: 20px;
         display:flex;
         justify-content: center;
     }
 
     .title{
+        position: relative;
+        top: 25px;
         display: flex;
         justify-content: center;
         font-family: 'Tilt Warp', cursive;
@@ -111,22 +133,86 @@ body{
 
     .box{
         text-align: center;
-        background-color: #BCBBB2;
         padding: 0.5px;
-        box-shadow: 1px 1px 4px #000;
     }
+
+    .container{
+        position: relative;
+        top: 55px; left: 300px;
+        width: 1400px;
+        height: 450px;
+        display: block;
+        align-items: center; 
+        justify-content: center;
+        box-shadow: 0px 1px 10px rgba(0,0 ,0, 0.2);
+        border-radius: 10px;
+        border-color: #000;
+        color: #000;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+    
+    .row{
+        display: flex;  
+    }
+
+    .card{
+        position: relative;
+        bottom: 25%;
+        width: 436px;
+        height: 170px;
+        margin: 12px;
+        border-radius: 10px;
+        padding: 10px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0px 1px 10px rgba(0,0 ,0, 0.2);
+        cursor: default;
+        transition: all 400ms ease;
+    }
+
+    .card:hover{
+        box-shadow: 5px 5px 20px rgba(0,0,0,0.4);
+        transform: translateY(-3%);
+    }
+  
+    .left{
+        text-align: left;
+        line-height: 1.5;
+        padding-left: 10px;
+        padding-right: 100px;
+        padding-top: 10px;
+        margin-left: 5px;
+        float: left;
+        position: absolute;
+        width: 100%;
+        height: auto;
+    }
+
+    .right {
+        text-align: center;
+        padding-top: 100px;
+        padding-right: 10px;
+        padding-left: 230px;
+        margin-left: 10px;
+        position: absolute;
+        float: right;
+        width: 100%;
+        height: auto;
+    }
+
 
     footer{
         position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
-        background: #F0D628;
+        background: #f02828;
         height: auto;
         width: 100vw;
         font-family: "Open Sans";
         padding-top: 5px;
-        box-shadow: 1px 1px 6px #000;
+        box-shadow: 1px 1px 5px #000;
         
     }
 

@@ -63,16 +63,16 @@ public class CursoAprobadoDTO {
         this.horasSemanales = horasSemanales;
     }
 
-    public int getSeccion() {
-        return seccion;
+    public String getSeccion() {
+        return String.valueOf(seccion);
     }
 
     public void setSeccion(int seccion) {
         this.seccion = seccion;
     }
 
-    public int getPromedioFinal() {
-        return promedioFinal;
+    public String  getPromedioFinal() {
+        return String.valueOf(promedioFinal);
     }
 
     public void setPromedioFinal(int promedioFinal) {
@@ -97,4 +97,19 @@ public class CursoAprobadoDTO {
     }
 
     // endregion
+
+
+    @Override
+    public String toString() {
+        return "CursoAprobadoDTO{" +
+                "codigoCurso='" + codigoCurso + '\'' +
+                ", nombreCurso='" + nombreCurso + '\'' +
+                ", turno='" + turno + '\'' +
+                ", docente='" + docente + '\'' +
+                ", creditos=" + creditos +
+                ", horasSemanales=" + horasSemanales +
+                ", seccion=" + seccion +
+                ", promedioFinal=" + promedioFinal +
+                '}';
+    }
 }

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Record de Notas</title>
         <link rel="icon" href="img/utp.png">
-        <link rel ="stylesheet" href="/stylesheet/portal.css">
+        <link rel ="stylesheet" href="stylesheet/estilos.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
     </head>
@@ -16,7 +16,7 @@
                 <img src="img/newlogoUTP.jpg">
             </div>
             <nav>
-                <button onclick="location.href='index.html'" class="buttonLogout">Cerrar Sesión</button>
+                <button onclick="location.href='index.html'" login  class="buttonLogout">Cerrar Sesión</button>
             </nav>
         </header>
         <h1 class="title">RÉCORD DE NOTAS</h1>
@@ -26,19 +26,25 @@
                 <div class="code-center">
                     <label>Código:</label> <label class="box">${txtCodigo}</label> <br/>
                 </div>
-                <label>Nombres:</label> <label class="box">${txtNombres}</label>
+                <br><br>
+                <label>Nombre:</label> <label class="box">${txtNombres}</label>
                 <label>Apellidos:</label> <label class="box">${txtApellidos}</label>
                 <label>Carrera:</label> <label class="box">${txtCarrera}</label>
                 <label>Plan de Estudios:</label> <label class="box">${txtPlanDeEstudios}</label>
                 <label>Créditos Aprobados:</label> <label class="box">${txtCreditosAprobados}</label>
             </form>
         </div>
-        
-
+        <div class="title2">
+            <p>Cursos Aprobados</p>
+        </div>
+    <div class="container">
+        ${listaCursos}
+    </div>
+    </body>
         <footer>
             <div class="footer-content">
                 <h2>Servicio de Atención al Estudiante (SAE)</h2>
-                <p class="fa fa-whatsapp"> 960 252 970</p>
+                <p class="fa fa-whatsapp"> +51 960 252 970</p>
                 <p class="fa fa-whatsapp"> Lima (01) 315 9600 | Nivel Nacional 0801 19 600 (opción 1)</p>
             </div>
 
@@ -47,8 +53,4 @@
                     <a href="https://portalestudiante.utp.edu.pe/Home/TerminosDeUso" target="_blank"> Términos y Condiciones</a></p> 
             </div>
         </footer>
-
-    </body>
-
-
 </html>
