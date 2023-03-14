@@ -27,32 +27,16 @@ public class LoginServlet extends HttpServlet {
         String codigoEstudiante = (req.getParameter("txtCodigoEstudiante"));
         String contrasena = req.getParameter("txtContrasena");
 
-        ErrorLog errorLog = null;
         try {
-            errorLog = new ErrorLog("src/main/resources/error.log");
-        } catch (Exception e) {
-            System.out.print("Error al crear el log");
-        }
-
-
-        try {
-
-            //Generando lista de alumnos
-            String listaAlumnos = "src/main/resources/csv/registroEstudiantes.csv";
-            EstudianteDTO[] estudiantes = EstudianteDAO.listarEstudiantes(listaAlumnos, errorLog);
 
             //Validando usuario ingresado
-            ValidadorLogin.esUsuarioValido(codigoEstudiante,estudiantes);
-            ValidadorLogin.esContrasenaValida(contrasena,estudiantes,codigoEstudiante);
-
-            //Generando lista de cursos
-            String listaCursos= "src/main/resources/csv/registroCursos.csv";
-            CursoDTO[] cursos = CursoDAO.listarCursos(listaCursos,errorLog);
+            ValidadorLogin.esUsuarioValido(codigoEstudiante);
+            ValidadorLogin.esContrasenaValida(contrasena,codigoEstudiante);
 
 
             //Extrayendo estudiante ingresado
             EstudianteDTO estudianteDTO=new EstudianteDTO();
-            for (EstudianteDTO estudiante : estudiantes) {
+            for (EstudianteDTO estudiante : LanzadorApp.estudiantes) {
                 if (estudiante.getCodigoEstudiante().equalsIgnoreCase(codigoEstudiante)) {
                     estudianteDTO = estudiante;
                 }
@@ -60,7 +44,8 @@ public class LoginServlet extends HttpServlet {
 
             //Extrayendo cursos aprobados del estudiante ingresado
             String registrosNotas= "src/main/resources/csv/registrosNotas.csv";
-            ArrayList<CursoAprobadoDTO> cursosAprobados = CursoAprobadoDAO.listarCursosAprobados(registrosNotas,estudianteDTO.getCodigoEstudiante(),cursos,errorLog);
+            ArrayList<CursoAprobadoDTO> cursosAprobados = CursoAprobadoDAO.listarCursosAprobados(registrosNotas,
+                    estudianteDTO.getCodigoEstudiante(),LanzadorApp.cursos,LanzadorApp.errorLog);
 
 
             // Listando Cursos Aprobados del estudiante
@@ -75,7 +60,7 @@ public class LoginServlet extends HttpServlet {
         } catch (Exception e) {
             try {
                 //Capturando excepción y guardandola en un log de errores
-                String  event = errorLog.log(e.getMessage(), ErrorLog.Level.ERROR);
+                String  event = LanzadorApp.errorLog.log(e.getMessage(), ErrorLog.Level.ERROR);
 
                 //Devolviendo Página de credenciales erróneas
                 String html = TextUTP.read("src/main/resources/web/credencialesErroneas.html");

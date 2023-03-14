@@ -10,14 +10,14 @@ import java.util.*;
 
 public class PortalNotas {
 
-    private TreeMap<EstudianteDTO, ArrayList<CursoAprobadoDTO>> listadoEstudianteCursosAprobados = new TreeMap<>();
+    private HashMap<EstudianteDTO, ArrayList<CursoAprobadoDTO>> listadoEstudianteCursosAprobados = new HashMap<>();
 
 
     public void listCursosAprobados(EstudianteDTO estudiante, ArrayList<CursoAprobadoDTO> cursosAprobados){
         listadoEstudianteCursosAprobados.put(estudiante,cursosAprobados);
     }
 
-    public TreeMap<EstudianteDTO, ArrayList<CursoAprobadoDTO>> getListadoEstudiantes(){
+    public HashMap<EstudianteDTO, ArrayList<CursoAprobadoDTO>> getListadoEstudiantes(){
         return listadoEstudianteCursosAprobados;
     }
 
@@ -46,6 +46,7 @@ public class PortalNotas {
         String plantillaTarjetaCursoHtml = TextUTP.read(filename_tarjetas);
 
         //Recorrer la lista de cursos aprobados
+
         StringBuilder tarejtasCursosTotales = new StringBuilder();
 
         //String que albergará 1 sola fila completa con sus 3 tarjetas de cursos
