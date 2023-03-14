@@ -34,7 +34,7 @@ public class PortalNotas {
 
     public String getHTMLReport(EstudianteDTO estudianteDTO) throws IOException {
         // Cargar plantilla principal del portal
-        String filename = "src\\main\\resources\\templates\\portalNotas.html";
+        String filename = "src/main/resources/templates/portalNotas.html";
         String html = TextUTP.read(filename);
 
         // Cargar plantilla para las filas de tarjetas

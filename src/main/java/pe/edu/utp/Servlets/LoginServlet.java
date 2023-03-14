@@ -76,8 +76,11 @@ public class LoginServlet extends HttpServlet {
             try {
                 //Capturando excepción y guardandola en un log de errores
                 String  event = errorLog.log(e.getMessage(), ErrorLog.Level.ERROR);
-                //Imprimiendo error acontecido
-                System.out.print(event+"-"+getClass().toString());
+
+                //Devolviendo Página de credenciales erróneas
+                String html = TextUTP.read("src/main/resources/web/credencialesErroneas.html");
+                resp.setCharacterEncoding("utf-8");
+                resp.getWriter().println(html);
             }catch (Exception ex){
                 System.out.print("Error al registrar logs");
             }

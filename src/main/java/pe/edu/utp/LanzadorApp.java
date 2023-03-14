@@ -11,7 +11,7 @@ public class LanzadorApp {
     public static void main(String[] args) throws Exception {
 
         String path = "src/main/resources/web";
-        JettyUTP webserver = new JettyUTP(8080, path);
+        JettyUTP webserver = new JettyUTP(8080,path);
         webserver.addServlet(LoginServlet.class, "/portalNotas");
         webserver.start();
 
