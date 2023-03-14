@@ -34,22 +34,28 @@ public class PortalNotas {
 
     public String getHTMLReport(EstudianteDTO estudianteDTO) throws IOException {
         // Cargar plantilla principal del portal
-        String filename = "src\\main\\resources\\templates\\portalNotas.html";
-        String html = TextUTP.read(filename);
+        String filename = "src/main/resources/templates/portalNotas.html";
+        String plantillaPortalHtml = TextUTP.read(filename);
 
         // Cargar plantilla para las filas de tarjetas
         String filename_items = "src/main/resources/templates/filas.html";
-        String fila_html = TextUTP.read(filename_items);
+        String plantillaFilasHtml = TextUTP.read(filename_items);
 
         // Cargar plantilla para las tarjetas de cursos
         String filename_tarjetas = "src/main/resources/templates/tarjetaCurso.html";
-        String html_item = TextUTP.read(filename_tarjetas);
+        String plantillaTarjetaCursoHtml = TextUTP.read(filename_tarjetas);
 
         //Recorrer la lista de cursos aprobados
-        StringBuilder items_html = new StringBuilder();
+        StringBuilder tarejtasCursosTotales = new StringBuilder();
+
+        //String que albergará 1 sola fila completa con sus 3 tarjetas de cursos
         String filaTarjetas = "";
+
+        //Contador de Tarjetas de cursos instanciadas
         int tarjetas=0;
-        String filas;
+
+        //String que albergará todas las filas con el total de tarjetas de cursos
+        String filasTotales;
 
           CursoAprobadoDTO[] cursoAprobados = new CursoAprobadoDTO[0];
           cursoAprobados = listadoEstudianteCursosAprobados.get(estudianteDTO).toArray(cursoAprobados);
@@ -57,15 +63,16 @@ public class PortalNotas {
 
             for (int i = 0; i < cursoAprobados.length; i++) {
 
-
+                //En caso de se instancien 3 tarjetas, se guarda dicha fila en un String y se empieza otra fila nueva
                 if (tarjetas%3==0&&tarjetas>0){
                     //Agregando filas de tarjetas a html
-                    filas =fila_html.replace("${txtTarjetaCurso}",filaTarjetas);
-                    items_html.append(filas);
+                    filasTotales =plantillaFilasHtml.replace("${txtTarjetaCurso}",filaTarjetas);
+                    tarejtasCursosTotales.append(filasTotales);
                     filaTarjetas="";
                 }
 
-                String item = html_item.replace("${txtNombreCurso}", cursoAprobados[i].getNombreCurso())
+                //Generando instancia de Tarjeta de Curso
+                String item = plantillaTarjetaCursoHtml.replace("${txtNombreCurso}", cursoAprobados[i].getNombreCurso())
                     .replace("${txtTurno}", cursoAprobados[i].getTurno())
                         .replace("${Seccion}", cursoAprobados[i].getSeccion())
                         .replace("${PromedioFinal}", cursoAprobados[i].getPromedioFinal())
@@ -73,24 +80,28 @@ public class PortalNotas {
                     .replace("${txtCreditos}", Integer.toString(cursoAprobados[i].getCreditos()))
                     .replace("${txtHorasSemanales}", Integer.toString((cursoAprobados[i].getHorasSemanales())));
 
+                //Añandiendo Tarjeta a una fila
                 filaTarjetas+=(item);
+
+                //Aumentando contador de filas en 1 unidad
                 tarjetas++;
 
+                //En caso de llegar al último curso y la fila aún no está completa, llenar la fila con los cursos disponibles
                  if ( tarjetas == cursoAprobados.length){
-                    filas = fila_html.replace("${txtTarjetaCurso}",filaTarjetas);
-                    items_html.append(filas);
+                     filasTotales = plantillaFilasHtml.replace("${txtTarjetaCurso}",filaTarjetas);
+                     tarejtasCursosTotales.append(filasTotales);
                 }
             }
 
 
         //Reemplazando datos del estudiante
-        String reporteHTML = html.replace("${txtCodigo}",estudianteDTO.getCodigoEstudiante())
+        String reporteHTML = plantillaPortalHtml.replace("${txtCodigo}",estudianteDTO.getCodigoEstudiante())
                 .replace("${txtNombres}",estudianteDTO.getPrimerNombre() + " " + estudianteDTO.getSegundoNombre())
                 .replace("${txtApellidos}",estudianteDTO.getApellidoPaterno()+" "+estudianteDTO.getApellidoMaterno())
                 .replace("${txtCarrera}",estudianteDTO.getCarrera())
                 .replace("${txtPlanDeEstudios}",estudianteDTO.getPlanDeEstudios())
                 .replace("${txtCreditosAprobados}",Integer.toString(getCreditosAprobados(estudianteDTO)))
-                .replace("${listaCursos}",items_html);
+                .replace("${listaCursos}",tarejtasCursosTotales);
 
         return reporteHTML;
     }

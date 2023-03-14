@@ -104,3 +104,13 @@ button{
     font-weight: 800;
 }
 
+.credentials-incorrect{
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    color: white;
+    text-decoration: underline;
+    font-weight: bold;
+}
