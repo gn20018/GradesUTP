@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class LoginServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // Capturar credenciales
         String codigoEstudiante = (req.getParameter("txtCodigoEstudiante"));

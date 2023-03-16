@@ -120,15 +120,15 @@ body{
         width: 120px;
         height: 3px;
         background-color: currentColor;
-        top: 0.6em;
+        top: 0.7em;
     }
 
     h1::before{
-        left: 34%;
+        left: 27%;
     }
 
     h1::after{
-        right: 34%;
+        right: 27%;
     }
 
     .box{
