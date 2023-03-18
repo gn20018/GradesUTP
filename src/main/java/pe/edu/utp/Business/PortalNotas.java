@@ -11,12 +11,12 @@ public class PortalNotas {
 
     private HashMap<EstudianteDTO, ArrayList<CursoAprobadoDTO>> listadoEstudianteCursosAprobados = new HashMap<>();
 
-    private static final String rutaPlantilaPortal = LanzadorApp.directorioRaiz.concat("/templates/portalNotas.html")  ;
-    private static final String rutaPlantillaFila = LanzadorApp.directorioRaiz.concat("/templates/filas.html") ;
-    private static final String rutaplantillaTarjetaCursoHtml= LanzadorApp.directorioRaiz.concat("/templates/tarjetaCurso.html");
-
-
-
+    private static final String rutaPlantilaPortal = (String.format("%s%stemplates%sportalNotas.html",
+            LanzadorApp.directorioRaiz, LanzadorApp.separador,LanzadorApp.separador));
+    private static final String rutaPlantillaFila = (String.format("%s%stemplates%sfilas.html",
+            LanzadorApp.directorioRaiz, LanzadorApp.separador,LanzadorApp.separador));
+    private static final String rutaplantillaTarjetaCursoHtml= (String.format("%s%stemplates%starjetaCurso.html",
+            LanzadorApp.directorioRaiz, LanzadorApp.separador,LanzadorApp.separador));
 
 
     public void listCursosAprobados(EstudianteDTO estudiante, ArrayList<CursoAprobadoDTO> cursosAprobados){

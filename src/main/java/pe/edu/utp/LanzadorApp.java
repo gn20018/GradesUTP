@@ -23,6 +23,8 @@ public class LanzadorApp {
     private static String archivoCursos;
     private static String archivoRegistros;
     private static String archivoErrorLog;
+
+    public static final String separador = System.getProperty("file.separator");
    public static EstudianteDTO[] estudiantes;
    public static CursoDTO[] cursos;
     public static String getArchivoRegistros() {
@@ -41,10 +43,10 @@ public class LanzadorApp {
 
             try {
                 //Generando rutas de archivos necesarios
-                archivoEstudiantes = directorioRaiz+"/csv/registroEstudiantes.csv";
-                archivoCursos = directorioRaiz+"/csv/registroCursos.csv";
-                archivoRegistros = directorioRaiz+"/csv/registroNotas.csv";
-                archivoErrorLog = directorioRaiz+"/error.log";
+                archivoEstudiantes = String.format("%s%scsv%sregistroEstudiantes.csv",directorioRaiz,separador,separador);
+                archivoCursos = String.format("%s%scsv%sregistroCursos.csv",directorioRaiz,separador,separador);
+                archivoRegistros = String.format("%s%scsv%sregistroNotas.csv",directorioRaiz,separador,separador);
+                archivoErrorLog = String.format("%s%serror.log",directorioRaiz,separador);
 
                 //Generar ErrorLog
                 generarErrorLog();
@@ -56,7 +58,7 @@ public class LanzadorApp {
                 generarDatos();
 
                 //Iniciando Servidor Web
-                String path = directorioRaiz.concat("/web");
+                String path = directorioRaiz.concat(separador.concat("web"));
 
                 int puerto = obtenerPuerto(args);
 

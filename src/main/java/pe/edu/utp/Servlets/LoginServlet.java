@@ -59,7 +59,8 @@ public class LoginServlet extends HttpServlet {
                 String  event = LanzadorApp.errorLog.log(e.getMessage(), ErrorLog.Level.ERROR);
 
                 //Devolviendo Página de credenciales erróneas
-                String html = TextUTP.read(LanzadorApp.directorioRaiz + "/web/credencialesErroneas.html");
+                String html = TextUTP.read(String.format("%s%sweb%scredencialesErroneas.html",LanzadorApp.directorioRaiz
+                        ,LanzadorApp.separador, LanzadorApp.separador));
                 resp.setCharacterEncoding("utf-8");
                 resp.getWriter().println(html);
             }catch (Exception ex){
