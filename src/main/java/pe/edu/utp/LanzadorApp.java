@@ -1,5 +1,6 @@
 package pe.edu.utp;
 
+import org.apache.commons.cli.*;
 import pe.edu.utp.Business.PortalNotas;
 import pe.edu.utp.Models.DAO.CursoDAO;
 import pe.edu.utp.Models.DAO.EstudianteDAO;
@@ -9,38 +10,133 @@ import pe.edu.utp.Servlets.LoginServlet;
 import pe.edu.utp.utils.ErrorLog;
 import pe.edu.utp.utils.JettyUTP;
 
+
 public class LanzadorApp {
 
-    public static PortalNotas portal = new PortalNotas();
+    private static Options options;
+    private static CommandLine cmd;
+    public static PortalNotas portal;
 
     public static ErrorLog errorLog;
-    private static String listaEstudiantes_ruta = "src/main/resources/csv/registroEstudiantes.csv";
-    private static String listaCursos_ruta= "src/main/resources/csv/registroCursos.csv";
-
-
-   public static EstudianteDTO[] estudiantes ;
+    public static String directorioRaiz;
+    private static String archivoEstudiantes;
+    private static String archivoCursos;
+    private static String archivoRegistros;
+    private static String archivoErrorLog;
+   public static EstudianteDTO[] estudiantes;
    public static CursoDTO[] cursos;
+    public static String getArchivoRegistros() {
+        return archivoRegistros;
+    }
 
 
     public static void main(String[] args) throws Exception {
 
-        //Generar ErrorLog
-        generarErrorLog();
+        try {
+            //Generando Opciones
+            crearOpciones();
 
-        //Generar lista de datos
-        generarDatos();
+            //Pedir Ruta de Carpeta de Recursos
+            directorioRaiz = obtenerDirectorioRecursos(args);
 
-        //Iniciando Servidor Web
-        String path = "src/main/resources/web";
-        JettyUTP webserver = new JettyUTP(8080,path);
-        webserver.addServlet(LoginServlet.class, "/portalNotas");
-        webserver.start();
+            try {
+                //Generando rutas de archivos necesarios
+                archivoEstudiantes = directorioRaiz+"/csv/registroEstudiantes.csv";
+                archivoCursos = directorioRaiz+"/csv/registroCursos.csv";
+                archivoRegistros = directorioRaiz+"/csv/registroNotas.csv";
+                archivoErrorLog = directorioRaiz+"/error.log";
+
+                //Generar ErrorLog
+                generarErrorLog();
+
+                //Instanciando clase Portal de Notas
+                portal = new PortalNotas();
+
+                //Generar lista de datos
+                generarDatos();
+
+                //Iniciando Servidor Web
+                String path = directorioRaiz.concat("/web");
+
+                int puerto = obtenerPuerto(args);
+
+                try{
+                    System.out.println("Servidor iniciado en el puerto: "+puerto);
+                    JettyUTP  webserver = new JettyUTP(obtenerPuerto(args),path);
+                    webserver.addServlet(LoginServlet.class, "/portalNotas");
+                    webserver.start();
+                }catch (Exception e) {
+                    System.out.println(e);
+                }
+
+
+
+
+            }catch (Exception e){
+                try {
+                    //Capturando excepción y guardandola en un log de errores
+                    String  event = LanzadorApp.errorLog.log(e.getMessage(), ErrorLog.Level.ERROR);
+                    System.out.println(event);
+                }catch (Exception ex){
+                    System.out.println(ex.getMessage());
+                    System.out.print("Error al registrar logs");
+                }
+            }
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
 
     }
 
+
+    private static void crearOpciones() throws Exception {
+        //Generando Opciones de CMD
+        options = new Options();
+        options.addOption("h", "help", false, "Muestra ayuda");
+        options.addOption("r", "resources", true, "Ingresa el Directorio de Recursos");
+        options.addOption("p", "port", true, "Especifica el puerto para ejecutar.");
+    }
+
+    private static String obtenerDirectorioRecursos(String[] args) throws Exception {
+
+        String directorioRecursos = null;
+
+        try {
+            cmd = new DefaultParser().parse(options, args);
+            if (cmd.hasOption("r")) {
+                directorioRecursos = cmd.getOptionValue("r");
+            }
+        } catch (Exception e) {
+            String msg = "Ruta de Directorio de Recursos No ingresada";
+            throw new Exception(msg);
+        }finally {
+            return directorioRecursos;
+        }
+
+    }
+
+    private static int obtenerPuerto(String[] args)throws Exception{
+        int puerto = 8080;
+
+        try {
+            cmd = new DefaultParser().parse(options, args);
+            if (cmd.hasOption("p")) {
+                puerto = Integer.parseInt(cmd.getOptionValue("p"));
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }finally {
+            return puerto;
+        }
+
+    }
+
+
     private static void generarErrorLog() {
         try {
-            errorLog = new ErrorLog("src/main/resources/error.log");
+            errorLog = new ErrorLog(archivoErrorLog);
         }catch (Exception e){
             System.out.print("Error al crear el log");
         }
@@ -52,11 +148,11 @@ public class LanzadorApp {
     }
     private static void generarEstudiantes() {
         //Generando lista de estudiantes
-        estudiantes = EstudianteDAO.listarEstudiantes(listaEstudiantes_ruta, errorLog);
+        estudiantes = EstudianteDAO.listarEstudiantes(archivoEstudiantes,errorLog);
     }
 
     private static void generarCursos() {
         //Generando lista de cursos
-        cursos = CursoDAO.listarCursos(listaCursos_ruta,errorLog);
+        cursos = CursoDAO.listarCursos(archivoCursos, errorLog);
     }
 }

@@ -1,28 +1,30 @@
 package pe.edu.utp.Models.DAO;
 
+
 import pe.edu.utp.Models.DTO.CursoDTO;
 import pe.edu.utp.utils.ErrorLog;
 import pe.edu.utp.utils.TextUTP;
 
 public class CursoDAO {
 
-    public static CursoDTO[] listarCursos(String path_file, ErrorLog errorLog){
+    public static CursoDTO[] listarCursos(String rutaCursos, ErrorLog errorLog){
         //Declarando un array de cursosDTO
         CursoDTO[] listaCursos = new CursoDTO[0];
 
         //Procesando la data del archivo csv
         try {
+
             //Extrayendo cada linea del csv en un Array de String
-            String[] datos = TextUTP.readlinesAsArray(path_file, TextUTP.OS.WINDOWS);
+            String[] datos = TextUTP.readlinesAsArray(rutaCursos, TextUTP.OS.WINDOWS);
+
+
 
             //Inicializando el array de cursos con la longitud exacta de cursos
             listaCursos = new CursoDTO[datos.length-1];
 
             //Creando un string para albergar los atributos de un curso
-            String[] atributos = new String[7];
+            String[] atributos;
 
-            //Declarando un CursoDTO de paso
-            CursoDTO cursoDTO;
 
             //Creando instancias de clase CursoDTO que se guardan en un array
             for (int i=0; i < listaCursos.length; i++){
@@ -41,9 +43,9 @@ public class CursoDAO {
                 //Capturando excepción y guardandola en un log de errores
                 String  event = errorLog.log(e.getMessage(), ErrorLog.Level.ERROR);
                 //Imprimiendo error acontecido
-                System.out.print(event+"-"+ CursoDAO.class.toString());
+                System.out.print(event+"-"+ CursoDAO.class);
             }catch (Exception ex){
-                System.out.print("Error al registrar logs");
+                System.out.print("Error al registrar logs - CURSODAO");
             }
         }
         return listaCursos;

@@ -1,24 +1,33 @@
 package pe.edu.utp.Validators;
 
 import pe.edu.utp.LanzadorApp;
-import pe.edu.utp.Models.DTO.EstudianteDTO;
 
 public class ValidadorLogin {
 
     public static boolean esUsuarioValido(String usuario) throws Exception {
-      boolean resultado=false;
-      int vueltas = 0;
 
+        //Variable de retorno
+        boolean resultado=false;
+        //Contador de verificaciones hechas
+        int vueltas = 0;
+
+        //Bucle ejecutado mientras las verificaciones no sobrepasen las 2
       while (vueltas<=2 && vueltas>=0){
+
+          //Verificación de Código de Estudiante ingresado con los Códigos de estudiante almacenados
           for (int i=0; i<LanzadorApp.estudiantes.length;i++) {
               if (LanzadorApp.estudiantes[i].getCodigoEstudiante().equalsIgnoreCase(usuario)) {
                   resultado = true;
+                  break;
               }
           }
 
+          //Se agregó una unidad a la cantidad de verificaciones hechas
           vueltas++;
 
-          if (resultado==false){
+          //Si no se encontró al estudiante, se generan nuevamente los datos para realizar una segunda verificación
+          //En caso contrario, se genera una excepción
+          if (!resultado){
               switch (vueltas){
                   case 1 -> LanzadorApp.generarDatos();
                   case 2 -> {
@@ -38,21 +47,31 @@ public class ValidadorLogin {
     }
 
     public static boolean esContrasenaValida(String contrasena, String codigoEstudiante) throws Exception{
+        //Variable de retorno
         boolean resultado=false;
+        //Contador de verificaciones hechas
         int vueltas = 0;
 
+        //Bucle ejecutado mientras las verificaciones no sobrepasen las 2
         while (vueltas<=2 && vueltas>=0){
+
+            //Verificación de Código de Estudiante ingresado con los Códigos de estudiante almacenados
             for (int i=0; i<LanzadorApp.estudiantes.length;i++) {
                 if (LanzadorApp.estudiantes[i].getCodigoEstudiante().equalsIgnoreCase(codigoEstudiante)) {
-                    if (LanzadorApp.estudiantes[i].getContrasena().equalsIgnoreCase(contrasena)){
+                    if (LanzadorApp.estudiantes[i].getContrasena().equals(contrasena)){
                         resultado = true;
+                        break;
                     }
                 }
             }
 
+            //Se agregó una unidad a la cantidad de verificaciones hechas
+
             vueltas++;
 
-            if (resultado==false){
+            //Si no se encontró al estudiante, se generan nuevamente los datos para realizar una segunda verificación
+            //En caso contrario, se genera una excepción
+            if (!resultado){
                 switch (vueltas){
                     case 1 -> LanzadorApp.generarDatos();
                     case 2 -> {

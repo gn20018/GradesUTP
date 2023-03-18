@@ -1,6 +1,7 @@
 package pe.edu.utp.Models.DTO;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 public class EstudianteDTO implements Comparable<EstudianteDTO>  {
 
@@ -108,6 +109,18 @@ public class EstudianteDTO implements Comparable<EstudianteDTO>  {
     }
     // endregion
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EstudianteDTO that)) return false;
+        return Objects.equals(getCodigoEstudiante(), that.getCodigoEstudiante()) && Objects.equals(getContrasena(), that.getContrasena()) && Objects.equals(getPrimerNombre(), that.getPrimerNombre()) && Objects.equals(getSegundoNombre(), that.getSegundoNombre()) && Objects.equals(getApellidoPaterno(), that.getApellidoPaterno()) && Objects.equals(getApellidoMaterno(), that.getApellidoMaterno()) && Objects.equals(getCarrera(), that.getCarrera()) && Objects.equals(getPlanDeEstudios(), that.getPlanDeEstudios());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCodigoEstudiante(), getContrasena(), getPrimerNombre(), getSegundoNombre(), getApellidoPaterno(), getApellidoMaterno(), getCarrera(), getPlanDeEstudios());
+    }
 
     public int compareTo(EstudianteDTO o) {
         return ESTUDIANTE_DTO_COMPARATOR_NATURAL.compare(this, o);

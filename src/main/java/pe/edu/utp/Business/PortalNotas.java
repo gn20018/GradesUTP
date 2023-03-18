@@ -1,10 +1,9 @@
 package pe.edu.utp.Business;
 
+import pe.edu.utp.LanzadorApp;
 import pe.edu.utp.Models.DTO.CursoAprobadoDTO;
-import pe.edu.utp.Models.DTO.CursoDTO;
 import pe.edu.utp.Models.DTO.EstudianteDTO;
 import pe.edu.utp.utils.TextUTP;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -12,13 +11,16 @@ public class PortalNotas {
 
     private HashMap<EstudianteDTO, ArrayList<CursoAprobadoDTO>> listadoEstudianteCursosAprobados = new HashMap<>();
 
+    private static final String rutaPlantilaPortal = LanzadorApp.directorioRaiz.concat("/templates/portalNotas.html")  ;
+    private static final String rutaPlantillaFila = LanzadorApp.directorioRaiz.concat("/templates/filas.html") ;
+    private static final String rutaplantillaTarjetaCursoHtml= LanzadorApp.directorioRaiz.concat("/templates/tarjetaCurso.html");
+
+
+
+
 
     public void listCursosAprobados(EstudianteDTO estudiante, ArrayList<CursoAprobadoDTO> cursosAprobados){
         listadoEstudianteCursosAprobados.put(estudiante,cursosAprobados);
-    }
-
-    public HashMap<EstudianteDTO, ArrayList<CursoAprobadoDTO>> getListadoEstudiantes(){
-        return listadoEstudianteCursosAprobados;
     }
 
     //Función para obtener créditos aprobados totales a partir de la suma de creditos de cada curso aprobado
@@ -33,17 +35,15 @@ public class PortalNotas {
     }
 
     public String getHTMLReport(EstudianteDTO estudianteDTO) throws IOException {
+
         // Cargar plantilla principal del portal
-        String filename = "src/main/resources/templates/portalNotas.html";
-        String plantillaPortalHtml = TextUTP.read(filename);
+            String plantillaPortalHtml = TextUTP.read(rutaPlantilaPortal);
 
-        // Cargar plantilla para las filas de tarjetas
-        String filename_items = "src/main/resources/templates/filas.html";
-        String plantillaFilasHtml = TextUTP.read(filename_items);
+            // Cargar plantilla para las filas de tarjetas
+            String plantillaFilasHtml = TextUTP.read(rutaPlantillaFila);
 
-        // Cargar plantilla para las tarjetas de cursos
-        String filename_tarjetas = "src/main/resources/templates/tarjetaCurso.html";
-        String plantillaTarjetaCursoHtml = TextUTP.read(filename_tarjetas);
+            // Cargar plantilla para las tarjetas de cursos
+            String plantillaTarjetaCursoHtml = TextUTP.read(rutaplantillaTarjetaCursoHtml);
 
         //Recorrer la lista de cursos aprobados
 
@@ -62,37 +62,37 @@ public class PortalNotas {
           cursoAprobados = listadoEstudianteCursosAprobados.get(estudianteDTO).toArray(cursoAprobados);
 
 
-            for (int i = 0; i < cursoAprobados.length; i++) {
+        for (CursoAprobadoDTO cursoAprobado : cursoAprobados) {
 
-                //En caso de se instancien 3 tarjetas, se guarda dicha fila en un String y se empieza otra fila nueva
-                if (tarjetas%3==0&&tarjetas>0){
-                    //Agregando filas de tarjetas a html
-                    filasTotales =plantillaFilasHtml.replace("${txtTarjetaCurso}",filaTarjetas);
-                    tarejtasCursosTotales.append(filasTotales);
-                    filaTarjetas="";
-                }
-
-                //Generando instancia de Tarjeta de Curso
-                String item = plantillaTarjetaCursoHtml.replace("${txtNombreCurso}", cursoAprobados[i].getNombreCurso())
-                    .replace("${txtTurno}", cursoAprobados[i].getTurno())
-                        .replace("${Seccion}", cursoAprobados[i].getSeccion())
-                        .replace("${PromedioFinal}", cursoAprobados[i].getPromedioFinal())
-                        .replace("${txtDocente}", cursoAprobados[i].getDocente())
-                    .replace("${txtCreditos}", Integer.toString(cursoAprobados[i].getCreditos()))
-                    .replace("${txtHorasSemanales}", Integer.toString((cursoAprobados[i].getHorasSemanales())));
-
-                //Añandiendo Tarjeta a una fila
-                filaTarjetas+=(item);
-
-                //Aumentando contador de filas en 1 unidad
-                tarjetas++;
-
-                //En caso de llegar al último curso y la fila aún no está completa, llenar la fila con los cursos disponibles
-                 if ( tarjetas == cursoAprobados.length){
-                     filasTotales = plantillaFilasHtml.replace("${txtTarjetaCurso}",filaTarjetas);
-                     tarejtasCursosTotales.append(filasTotales);
-                }
+            //En caso de se instancien 3 tarjetas, se guarda dicha fila en un String y se empieza otra fila nueva
+            if (tarjetas % 3 == 0 && tarjetas > 0) {
+                //Agregando filas de tarjetas a html
+                filasTotales = plantillaFilasHtml.replace("${txtTarjetaCurso}", filaTarjetas);
+                tarejtasCursosTotales.append(filasTotales);
+                filaTarjetas = "";
             }
+
+            //Generando instancia de Tarjeta de Curso
+            String item = plantillaTarjetaCursoHtml.replace("${txtNombreCurso}", cursoAprobado.getNombreCurso())
+                    .replace("${txtTurno}", cursoAprobado.getTurno())
+                    .replace("${Seccion}", cursoAprobado.getSeccion())
+                    .replace("${PromedioFinal}", cursoAprobado.getPromedioFinal())
+                    .replace("${txtDocente}", cursoAprobado.getDocente())
+                    .replace("${txtCreditos}", Integer.toString(cursoAprobado.getCreditos()))
+                    .replace("${txtHorasSemanales}", Integer.toString((cursoAprobado.getHorasSemanales())));
+
+            //Añandiendo Tarjeta a una fila
+            filaTarjetas += (item);
+
+            //Aumentando contador de filas en 1 unidad
+            tarjetas++;
+
+            //En caso de llegar al último curso y la fila aún no está completa, llenar la fila con los cursos disponibles
+            if (tarjetas == cursoAprobados.length) {
+                filasTotales = plantillaFilasHtml.replace("${txtTarjetaCurso}", filaTarjetas);
+                tarejtasCursosTotales.append(filasTotales);
+            }
+        }
 
 
         //Reemplazando datos del estudiante

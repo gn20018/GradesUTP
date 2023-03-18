@@ -86,4 +86,18 @@ public class CursoDTO {
     }
 
     // endregion
+
+
+    @Override
+    public String toString() {
+        return "CursoDTO{" +
+                "codigoCurso='" + codigoCurso + '\'' +
+                ", nombreCurso='" + nombreCurso + '\'' +
+                ", turno='" + turno + '\'' +
+                ", docente='" + docente + '\'' +
+                ", creditos=" + creditos +
+                ", horasSemanales=" + horasSemanales +
+                ", seccion=" + seccion +
+                '}';
+    }
 }
